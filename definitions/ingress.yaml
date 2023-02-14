@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-eis
+  annotations:
+    # use the shared ingress-nginx
+    kubernetes.io/ingress.class: "nginx"    
+spec:
+  rules:
+  - host: eis.com
+    http:
+      paths:
+      - path: /api/employee
+        pathType: Prefix
+        backend:
+          service:
+            name: employee-service
+            port:
+              number: 8080
+      - path: /api/department
+        pathType: Prefix
+        backend:
+          service:
+            name: department-service
+            port:
+              number: 8080

@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: department
+  labels:
+    app: department  
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: department
+  template:
+    metadata:
+      labels:
+        app: department
+    spec:
+      containers:
+      - image: sureshgkhyd/department
+        imagePullPolicy: Never
+        name: department
+        resources:
+          limits:
+            cpu: "250m"
+            memory: "128Mi"
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: department-service
+spec:
+  selector:
+    app: department
+  ports:
+  - port: 8080
+    targetPort: 8080
+
+        

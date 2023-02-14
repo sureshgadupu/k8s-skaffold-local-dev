@@ -1,0 +1,24 @@
+apiVersion: skaffold/v4beta2
+kind: Config
+metadata:
+  name: docker-k-s
+build:
+  artifacts:
+    - image: sureshgkhyd/department
+      context: department
+      buildpacks:
+        builder: gcr.io/buildpacks/builder:v1
+        env:
+          - "GOOGLE_RUNTIME_VERSION=17"
+    - image: sureshgkhyd/employee
+      context: employee
+      buildpacks:
+        builder: gcr.io/buildpacks/builder:v1
+        env:
+          - "GOOGLE_RUNTIME_VERSION=17"
+
+manifests:
+  rawYaml:
+    - definitions/department-deployment.yaml
+    - definitions/employee-deployment.yaml
+    - definitions/ingress.yaml
